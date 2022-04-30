@@ -20,4 +20,12 @@ public class Users {
     public String getAuth() {
         return auth;
     }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", auth=" + auth +
+                '}';
+    }
 }
