@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ListToys extends JFrame {
     private JPanel ListToysPanel;
-    private JButton button1;
+    private JButton btnNewToy;
     private final ListToys ListToysForm = this;
     private JTable table;
     private final List<Toy> Toys = getToys();
@@ -17,14 +17,18 @@ public class ListToys extends JFrame {
         setTitle("Játékok áruháza");
         setSize(450, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
         createTable();
+        createButton();
 
+        this.add(ListToysPanel);
+        this.setSize(550, 400);
+        this.setVisible(true);
+
+        setContentPane(ListToysPanel);
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (table.getSelectedRow() > -1) {
-
                     Toy toy = Toys.get(table.getSelectedRow());
                     Users user = new Users(2, "user", "user", "user@user.com", "User, User utca -1");
                     ListToysForm.setEnabled(false);
@@ -32,8 +36,13 @@ public class ListToys extends JFrame {
                 }
             }
         });
-
-
+        btnNewToy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ListToysForm.setEnabled(false);
+                AddNewToy AddNewToyForm = new AddNewToy(ListToysForm);
+            }
+        });
     }
 
     private List<Toy> getToys() throws SQLException {
@@ -54,7 +63,6 @@ public class ListToys extends JFrame {
         return toys;
     }
     private void createTable() {
-        JFrame frame = this;
         ListToysPanel = new JPanel();
         String[][] ToysArr = new String[Toys.size()][3];
         for (int i = 0; i < Toys.size()-1; i++) {
@@ -74,12 +82,15 @@ public class ListToys extends JFrame {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         ListToysPanel.add(new JScrollPane(table));
-        frame.add(ListToysPanel);
-        frame.setSize(550, 400);
-        frame.setVisible(true);
-        setContentPane(ListToysPanel);
     }
 
+    private void createButton() {
+        btnNewToy = new JButton("Új játék felvitele");
+        //if(this.user.getAuth() != "admin") {
+        //      button.setVisible(false);
+        //}
+        ListToysPanel.add(btnNewToy);
+    }
     public static void main(String[] args) throws SQLException {
         new ListToys();
     }

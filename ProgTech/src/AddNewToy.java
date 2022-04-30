@@ -1,8 +1,5 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,13 +11,14 @@ public class AddNewToy extends JFrame {
     private JTextField priceTField;
     private JLabel newtoyTitle;
     private JButton addBtn;
+    private final JFrame frame = this;
 
     private JPanel addnewtoyPanel;
-    public AddNewToy() {
+    public AddNewToy(JFrame prevFrame) {
         setContentPane(addnewtoyPanel);
         setTitle("Új játék felvitele");
         setSize(450, 300);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setVisible(true);
 
         priceTField.addKeyListener(new KeyAdapter() {
@@ -31,6 +29,13 @@ public class AddNewToy extends JFrame {
                 }
             }
         });
+
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                prevFrame.setEnabled(true);
+            }
+        });
+
         addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,7 +56,7 @@ public class AddNewToy extends JFrame {
                         stmt.close();
                         connection.close();
                         JOptionPane.showMessageDialog(null, "Sikeres adatfelvitel!");
-                        // Előző oldal értesítése az UPDATE metódussal
+                        prevFrame.setEnabled(true);
                         dispose();
                     }
                     catch(Exception ex) {
@@ -76,7 +81,4 @@ public class AddNewToy extends JFrame {
         return true;
     }
 
-    public static void main(String[] args) {
-        AddNewToy addnewtoyForm = new AddNewToy();
-    }
 }

@@ -30,7 +30,7 @@ public class OrderToy extends JFrame {
         setSize(450, 300);
         setVisible(true);
     }
-    public OrderToy(Toy toy, Users user, final JFrame frame) {
+    public OrderToy(Toy toy, Users user, final JFrame prevFrame) {
         setComponents();
         this.toy = toy;
         this.user = user;
@@ -38,7 +38,7 @@ public class OrderToy extends JFrame {
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
-                frame.setEnabled(true);
+                prevFrame.setEnabled(true);
             }
         });
         btnOrder.addActionListener(new ActionListener() {
