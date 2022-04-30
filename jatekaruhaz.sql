@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2022 at 11:36 AM
+-- Generation Time: Apr 30, 2022 at 02:42 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -44,7 +44,6 @@ CREATE TABLE `order` (
 CREATE TABLE `toy` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `type` varchar(20) NOT NULL,
   `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -52,11 +51,13 @@ CREATE TABLE `toy` (
 -- Dumping data for table `toy`
 --
 
-INSERT INTO `toy` (`id`, `name`, `type`, `price`) VALUES
-(1, 'Micimackó', 'Plush', 111),
-(2, 'Piros autó', 'Car', 222),
-(3, 'Unikornis', 'Plush', 456),
-(4, 'Távirányítós autó', 'Car', 456);
+INSERT INTO `toy` (`id`, `name`, `price`) VALUES
+(1, 'Micimackó', 111),
+(2, 'Piros autó', 222),
+(3, 'Unikornis', 456),
+(4, 'Távirányítós autó', 456),
+(11, 'Kiskacsa', 439),
+(12, 'Kard', 5);
 
 -- --------------------------------------------------------
 
@@ -118,7 +119,7 @@ ALTER TABLE `order`
 -- AUTO_INCREMENT for table `toy`
 --
 ALTER TABLE `toy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user`
