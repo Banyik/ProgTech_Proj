@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -23,16 +25,22 @@ public class OrderToy extends JFrame {
 
     private void setComponents() {
         setContentPane(OrderToyPanel);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setTitle("Játék megrendelése");
         setSize(450, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
-    public OrderToy(Toy toy, Users user) {
+    public OrderToy(Toy toy, Users user, final JFrame frame) {
         setComponents();
         this.toy = toy;
         this.user = user;
         this.frame = this;
+
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                frame.setEnabled(true);
+            }
+        });
         btnOrder.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,6 +52,8 @@ public class OrderToy extends JFrame {
                 try{
                     InsertIntoOrder(DB_URL, DB_USERNAME, PASSWORD, decorated, user.getUsername(), address);
                     JOptionPane.showMessageDialog(null, "Sikeres rendelés!\nFizetendő összeg: "+decorated.getPrice()+" Ft.");
+                    frame.setEnabled(true);
+                    dispose();
                 }
                 catch(Exception ex) {
                     ex.printStackTrace();

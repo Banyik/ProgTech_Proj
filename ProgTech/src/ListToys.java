@@ -16,7 +16,7 @@ public class ListToys extends JFrame {
     public ListToys() throws SQLException {
         setTitle("Játékok áruháza");
         setSize(450, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         createTable();
 
@@ -28,10 +28,12 @@ public class ListToys extends JFrame {
                     Toy toy = Toys.get(table.getSelectedRow());
                     Users user = new Users(2, "user", "user", "user@user.com", "User, User utca -1");
                     ListToysForm.setEnabled(false);
-                    OrderToy OrderToy = new OrderToy(toy, user);
+                    OrderToy OrderToy = new OrderToy(toy, user, ListToysForm);
                 }
             }
         });
+
+
     }
 
     private List<Toy> getToys() throws SQLException {
@@ -44,7 +46,7 @@ public class ListToys extends JFrame {
         ResultSet result = stmt.executeQuery(sql);
         List<Toy> toys = new ArrayList<>();
         while (result.next()) {
-            Toy toy = new Toy(Integer.parseInt(result.getString("id")), result.getString("name"), Integer.parseInt(result.getString("id")));
+            Toy toy = new Toy(Integer.parseInt(result.getString("id")), result.getString("name"), Integer.parseInt(result.getString("price")));
             toys.add(toy);
         }
         stmt.close();
@@ -58,6 +60,7 @@ public class ListToys extends JFrame {
         for (int i = 0; i < Toys.size()-1; i++) {
             ToysArr[i][0] = String.valueOf(Toys.get(i).getId());
             ToysArr[i][1] = String.valueOf(Toys.get(i).getName());
+            System.out.println(Toys.get(i).toString());
             ToysArr[i][2] = String.valueOf(Toys.get(i).getPrice());
         }
         String[] header = { "Id", "Megnevezés", "Egységár" };
