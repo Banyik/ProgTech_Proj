@@ -15,8 +15,6 @@ public class AddNewToy extends JFrame {
     private JLabel newtoyTitle;
     private JButton addBtn;
 
-    String[] nevek = {"Autó", "Plüss"};
-    private JComboBox cbTypes;
     private JPanel addnewtoyPanel;
     public AddNewToy() {
         setContentPane(addnewtoyPanel);
@@ -38,11 +36,7 @@ public class AddNewToy extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(validateTextFields()) {
                     String ToyName = nameTField.getText();
-                    String SelectedType="Plush";
-                    if(String.valueOf(cbTypes.getSelectedItem()) == "Autó")
-                        SelectedType = "Car";
                     String ToyPrice = priceTField.getText();
-
 
                     String DB_URL = "jdbc:mysql://localhost:3306/jatekaruhaz";
                     String USERNAME = "root";
@@ -52,12 +46,13 @@ public class AddNewToy extends JFrame {
                         Connection connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 
                         Statement stmt = connection.createStatement();
-                        String sql = "INSERT INTO toy(name, type, price) VALUES('"+ToyName+"', '"+SelectedType+"', "+ToyPrice+")";
+                        String sql = "INSERT INTO toy(name, price) VALUES('"+ToyName+"', "+ToyPrice+")";
                         stmt.execute(sql);
                         stmt.close();
-
-                        stmt.close();
                         connection.close();
+                        JOptionPane.showMessageDialog(null, "Sikeres adatfelvitel!");
+                        // Előző oldal értesítése az UPDATE metódussal
+                        dispose();
                     }
                     catch(Exception ex) {
                         ex.printStackTrace();
