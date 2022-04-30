@@ -34,7 +34,7 @@ public class RegisterPage {
                         while(result.next()){
                             if(!usernameField.getText().equals(result.getString("username")) && !usernameField.getText().isEmpty()){
                                 //TODO: Átirányítás
-                                //Users user = new Users(result.getInt("id"), result.getString("username"), result.getString("auth"), result.getString("email"), result.getString("address"));
+                                //
                                 if(!emailField.getText().equals(result.getString("email")) && !emailField.getText().isEmpty()){
                                     isAbleToRegister = true;
                                 }
@@ -52,8 +52,15 @@ public class RegisterPage {
                     else if(!password.isEmpty()){
                         JOptionPane.showMessageDialog(null, "A jelszavak nem egyeznek meg", "HIBA", JOptionPane.ERROR_MESSAGE);
                     }
-                    if(isAbleToRegister)
+                    if(isAbleToRegister){
                         stmt.execute("INSERT INTO user(email, username, password, auth, address) VALUES ('"+emailField.getText()+"', '"+usernameField.getText()+"', '"+password+"', 'User', 'N/A')");
+                        ResultSet resultThis = stmt.executeQuery("SELECT * FROM user WHERE username = '"+ usernameField.getText() +"' ;");
+                        while (resultThis.next()){
+                            Users user = new Users(resultThis.getInt("id"), resultThis.getString("username"), resultThis.getString("auth"), resultThis.getString("email"), "N/A");
+                            UserAddedObserver userObvserver = new UserAddedObserver(user);
+                            userObvserver.update();
+                        }
+                    }
 
                     stmt.close();
                     connection.close();
