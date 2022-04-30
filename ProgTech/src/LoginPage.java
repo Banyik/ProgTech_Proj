@@ -19,7 +19,6 @@ public class LoginPage {
                 String DB = "jdbc:mysql://localhost:3306/jatekaruhaz";
                 String USERNAME = "root";
                 String PASSWORD = "";
-                String users;
                 try{
                     Connection connection = DriverManager.getConnection(DB, USERNAME, PASSWORD);
 
@@ -29,6 +28,7 @@ public class LoginPage {
                     while(result.next()){
                         if(usernameField.getText().equals(result.getString("username")) && password.equals(result.getString("password"))){
                             //TODO: Átirányítás
+                            Users user = new Users(result.getInt("id"), result.getString("username"), result.getString("auth"), result.getString("email"), result.getString("address"));
 
                         }
                         else{
