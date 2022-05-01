@@ -12,6 +12,7 @@ public class LoginPage {
     private JButton loginButton;
     private JPanel LoginPanel;
 
+
     public LoginPage() {
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -29,7 +30,9 @@ public class LoginPage {
                         if(usernameField.getText().equals(result.getString("username")) && password.equals(result.getString("password"))){
                             //TODO: Átirányítás
                             Users user = new Users(result.getInt("id"), result.getString("username"), result.getString("auth"), result.getString("email"), result.getString("address"));
-
+                            UserLoggedInObserver userObvserver = new UserLoggedInObserver(user);
+                            userObvserver.update();
+                            break;
                         }
                         else{
                             JOptionPane.showMessageDialog(null, "Hibás jelszó vagy felhasználó név", "HIBA", JOptionPane.ERROR_MESSAGE);
