@@ -6,7 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class LoginPage {
+public class LoginPage extends JFrame{
+    private final LoginPage LoginPageForm = this;
     private JFormattedTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
@@ -32,6 +33,8 @@ public class LoginPage {
                             Users user = new Users(result.getInt("id"), result.getString("username"), result.getString("auth"), result.getString("email"), result.getString("address"));
                             UserLoggedInObserver userObvserver = new UserLoggedInObserver(user);
                             userObvserver.update();
+                            LoginPageForm.setEnabled(false);
+                            ListToys ListToysForm = new ListToys(user, LoginPageForm);
                             break;
                         }
                         else{
@@ -50,7 +53,6 @@ public class LoginPage {
 
         });
     }
-
     public static void main(String[] args) {
         JFrame frame = new JFrame("LoginPage");
         frame.setContentPane(new LoginPage().LoginPanel);

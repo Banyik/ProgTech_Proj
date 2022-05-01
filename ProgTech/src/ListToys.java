@@ -5,12 +5,18 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListToys extends JFrame {
+    private final Users userLoggedIn;
+    private final LoginPage LoginPageForm;
     private JButton btnNewToy;
+    private JButton btnLogout;
+
     public static final String[] columns = {
             "Id", "Megnevezés", "Egységár"
     };
@@ -19,11 +25,12 @@ public class ListToys extends JFrame {
     private JPanel mainPanel = new JPanel(new BorderLayout());
     private final ListToys ListToysForm = this;
     private final List<Toy> Toys = getToys();
-    public ListToys() throws SQLException {
-
+    public ListToys(Users user, LoginPage LoginPageForm) throws SQLException {
+        this.userLoggedIn = user;
+        this.LoginPageForm = LoginPageForm;
         setTitle("Játékok áruháza");
         setSize(450, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         createButton();
         createTable();
         this.add(mainPanel);
@@ -36,9 +43,8 @@ public class ListToys extends JFrame {
             public void valueChanged(ListSelectionEvent event) {
                 if (table.getSelectedRow() > -1) {
                     Toy toy = Toys.get(table.getSelectedRow());
-                    Users user = new Users(2, "user", "user", "user@user.com", "User, User utca -1");
                     ListToysForm.setEnabled(false);
-                    OrderToy OrderToy = new OrderToy(toy, user, ListToysForm);
+                    OrderToy OrderToy = new OrderToy(toy, userLoggedIn, ListToysForm);
                 }
             }
         });
@@ -47,6 +53,20 @@ public class ListToys extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ListToysForm.setEnabled(false);
                 AddNewToy AddNewToyForm = new AddNewToy(ListToysForm);
+            }
+        });
+
+        btnLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginPageForm.setEnabled(true);
+                dispose();
+            }
+        });
+
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                LoginPageForm.setEnabled(true);
             }
         });
     }
@@ -111,13 +131,13 @@ public class ListToys extends JFrame {
     private void createButton() {
         JPanel buttonPanel = new JPanel();
         btnNewToy = new JButton("Új játék felvitele");
-        //if(this.user.getAuth() != "admin") {
-        //      button.setVisible(false);
-        //}
+        btnNewToy.setVisible(false);
+        if(this.userLoggedIn.getAuth().equals("admin")) {
+            btnNewToy.setVisible(true);
+        }
+        btnLogout = new JButton("Kijelentkezés");
         buttonPanel.add(btnNewToy);
+        buttonPanel.add(btnLogout);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-    }
-    public static void main(String[] args) throws SQLException {
-        new ListToys();
     }
 }

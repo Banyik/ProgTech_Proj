@@ -12,6 +12,7 @@ public class AddNewToy extends JFrame {
     private JLabel newtoyTitle;
     private JButton addBtn;
     private final JFrame frame = this;
+
     private JPanel addnewtoyPanel;
     private final ListToys prevFrame;
     public AddNewToy(ListToys listtoysframe) {

@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class RegisterPage {
+public class RegisterPage extends JFrame{
     private JPasswordField passwordField;
     private JFormattedTextField usernameField;
     private JButton registerButton;
@@ -15,6 +15,11 @@ public class RegisterPage {
     private JFormattedTextField emailField;
 
     public RegisterPage() {
+        this.setContentPane(new RegisterPage().RegisterPanel);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.pack();
+        this.setVisible(true);
+
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,8 +38,7 @@ public class RegisterPage {
                     if(password.equals(passwordAgain) && !password.isEmpty()){
                         while(result.next()){
                             if(!usernameField.getText().equals(result.getString("username")) && !usernameField.getText().isEmpty()){
-                                //TODO: Átirányítás
-                                //
+
                                 if(!emailField.getText().equals(result.getString("email")) && !emailField.getText().isEmpty()){
                                     isAbleToRegister = true;
                                 }
@@ -59,6 +63,8 @@ public class RegisterPage {
                             Users user = new Users(resultThis.getInt("id"), resultThis.getString("username"), resultThis.getString("auth"), resultThis.getString("email"), "N/A");
                             UserAddedObserver userObvserver = new UserAddedObserver(user);
                             userObvserver.update();
+                            LoginPage LoginPageForm = new LoginPage();
+                            dispose();
                         }
                     }
 
@@ -72,12 +78,5 @@ public class RegisterPage {
         });
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("RegisterPage");
-        frame.setContentPane(new RegisterPage().RegisterPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
 
 }
