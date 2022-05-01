@@ -12,9 +12,10 @@ public class AddNewToy extends JFrame {
     private JLabel newtoyTitle;
     private JButton addBtn;
     private final JFrame frame = this;
-
     private JPanel addnewtoyPanel;
-    public AddNewToy(JFrame prevFrame) {
+    private final ListToys prevFrame;
+    public AddNewToy(ListToys listtoysframe) {
+        this.prevFrame = listtoysframe;
         setContentPane(addnewtoyPanel);
         setTitle("Új játék felvitele");
         setSize(450, 300);
@@ -49,7 +50,6 @@ public class AddNewToy extends JFrame {
 
                     try{
                         Connection connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-
                         Statement stmt = connection.createStatement();
                         String sql = "INSERT INTO toy(name, price) VALUES('"+ToyName+"', "+ToyPrice+")";
                         stmt.execute(sql);
@@ -57,6 +57,7 @@ public class AddNewToy extends JFrame {
                         connection.close();
                         JOptionPane.showMessageDialog(null, "Sikeres adatfelvitel!");
                         prevFrame.setEnabled(true);
+                        prevFrame.updateToyTable();
                         dispose();
                     }
                     catch(Exception ex) {
@@ -67,7 +68,6 @@ public class AddNewToy extends JFrame {
             }
         });
     }
-
     private boolean validateTextFields() {
         if (nameTField.getText().length() == 0) {
             JOptionPane.showMessageDialog(null, "Adjon meg egy Megnevezést a temréknek!");
@@ -75,10 +75,13 @@ public class AddNewToy extends JFrame {
         }
 
         if (priceTField.getText().length() == 0) {
-            JOptionPane.showMessageDialog(null, "Adjon meg egy Egységárat a(z) Autónak!");
+            JOptionPane.showMessageDialog(null, "Adjon meg egy Egységárat a terméknek!");
+            return false;
+        }
+        if (Integer.parseInt(priceTField.getText()) <= 0) {
+            JOptionPane.showMessageDialog(null, "Érvényes árat adjon meg a terméknek!");
             return false;
         }
         return true;
     }
-
 }

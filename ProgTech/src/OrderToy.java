@@ -50,10 +50,12 @@ public class OrderToy extends JFrame {
                 String PASSWORD = "";
                 String address = tfSzallitasiCim.getText();
                 try{
-                    InsertIntoOrder(DB_URL, DB_USERNAME, PASSWORD, decorated, user.getUsername(), address);
-                    JOptionPane.showMessageDialog(null, "Sikeres rendelés!\nFizetendő összeg: "+decorated.getPrice()+" Ft.");
-                    frame.setEnabled(true);
-                    dispose();
+                    if(validateOrder()) {
+                        InsertIntoOrder(DB_URL, DB_USERNAME, PASSWORD, decorated, user.getUsername(), address);
+                        JOptionPane.showMessageDialog(null, "Sikeres rendelés!\nFizetendő összeg: "+decorated.getPrice()+" Ft.");
+                        prevFrame.setEnabled(true);
+                        dispose();
+                    }
                 }
                 catch(Exception ex) {
                     ex.printStackTrace();
@@ -88,9 +90,13 @@ public class OrderToy extends JFrame {
             }
         });
     }
-    /*public static void main(String[] args) {
-        Toy jatek = new Toy(1, "Pelda nev", 123);
-        Users user = new Users(2, "user", "user", "user@user.com", "User, User utca -1");
-        OrderToy OrderToyForm = new OrderToy(jatek, user);
-    }*/
+
+    public boolean validateOrder() {
+        if(tfSzallitasiCim.getText().length() <= 0)
+        {
+            JOptionPane.showMessageDialog(null, "Adjon meg egy kiszállítási címet!");
+            return false;
+        }
+        return true;
+    }
 }

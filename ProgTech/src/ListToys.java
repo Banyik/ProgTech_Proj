@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -8,23 +10,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListToys extends JFrame {
-    private JPanel ListToysPanel;
     private JButton btnNewToy;
+    public static final String[] columns = {
+            "Id", "Megnevezés", "Egységár"
+    };
+    private DefaultTableModel model = new DefaultTableModel(columns, 0);
+    private JTable table = new JTable(model);
+    private JPanel mainPanel = new JPanel(new BorderLayout());
     private final ListToys ListToysForm = this;
-    private JTable table;
     private final List<Toy> Toys = getToys();
     public ListToys() throws SQLException {
+
         setTitle("Játékok áruháza");
         setSize(450, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        createTable();
         createButton();
-
-        this.add(ListToysPanel);
+        createTable();
+        this.add(mainPanel);
         this.setSize(550, 400);
         this.setVisible(true);
 
-        setContentPane(ListToysPanel);
+        setContentPane(mainPanel);
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
@@ -57,39 +63,59 @@ public class ListToys extends JFrame {
         while (result.next()) {
             Toy toy = new Toy(Integer.parseInt(result.getString("id")), result.getString("name"), Integer.parseInt(result.getString("price")));
             toys.add(toy);
+            System.out.println(toy.toString());
         }
         stmt.close();
         connection.close();
         return toys;
     }
     private void createTable() {
-        ListToysPanel = new JPanel();
-        String[][] ToysArr = new String[Toys.size()][3];
-        for (int i = 0; i < Toys.size()-1; i++) {
-            ToysArr[i][0] = String.valueOf(Toys.get(i).getId());
-            ToysArr[i][1] = String.valueOf(Toys.get(i).getName());
-            System.out.println(Toys.get(i).toString());
-            ToysArr[i][2] = String.valueOf(Toys.get(i).getPrice());
-        }
-        String[] header = { "Id", "Megnevezés", "Egységár" };
-        table = new JTable(ToysArr, header);
-        for (int c = 0; c < table.getColumnCount(); c++)
-        {
-            Class<?> col_class = table.getColumnClass(c);
-            table.setDefaultEditor(col_class, null);        // remove editor
+        for (int i = 0; i < Toys.size(); i++) {
+            model.addRow(
+                    new Object[]{
+                            Toys.get(i).getId(),
+                            Toys.get(i).getName(),
+                            Toys.get(i).getPrice()
+                    }
+            );
         }
         table.getTableHeader().setReorderingAllowed(false);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        mainPanel.add(new JScrollPane(table), BorderLayout.CENTER);
 
-        ListToysPanel.add(new JScrollPane(table));
     }
+    public void updateToyTable() throws SQLException {
+        String DB_URL = "jdbc:mysql://localhost:3306/jatekaruhaz";
+        String DB_USERNAME = "root";
+        String PASSWORD = "";
+        Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, PASSWORD);
+        Statement stmt = connection.createStatement();
+        String sql = "SELECT * FROM toy";
+        ResultSet result = stmt.executeQuery(sql);
+        List<Toy> toys = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        while (result.next()) {
+            Toy toy = new Toy(Integer.parseInt(result.getString("id")), result.getString("name"), Integer.parseInt(result.getString("price")));
+            if(!this.Toys.contains(toy))
+            {
+                Toys.add(toy);
+                model.addRow(new Object[]{String.valueOf(toy.getId()), String.valueOf(toy.getName()), String.valueOf(toy.getPrice())});
+            }
+        }
+        stmt.close();
+        connection.close();
 
+
+
+    }
     private void createButton() {
+        JPanel buttonPanel = new JPanel();
         btnNewToy = new JButton("Új játék felvitele");
         //if(this.user.getAuth() != "admin") {
         //      button.setVisible(false);
         //}
-        ListToysPanel.add(btnNewToy);
+        buttonPanel.add(btnNewToy);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
     }
     public static void main(String[] args) throws SQLException {
         new ListToys();
