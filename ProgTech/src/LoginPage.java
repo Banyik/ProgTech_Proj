@@ -12,6 +12,7 @@ public class LoginPage extends JFrame{
     private JPasswordField passwordField;
     private JButton loginButton;
     private JPanel LoginPanel;
+    private JButton registerButton;
 
 
     public LoginPage() {
@@ -51,6 +52,13 @@ public class LoginPage extends JFrame{
 
             }
 
+        });
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginPageForm.setEnabled(false);
+                RegisterPage registerPageForm = new RegisterPage();
+            }
         });
     }
     public static void main(String[] args) {

@@ -7,19 +7,19 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class RegisterPage extends JFrame{
+    private final RegisterPage registerPageForm = this;
     private JPasswordField passwordField;
     private JFormattedTextField usernameField;
     private JButton registerButton;
     private JPasswordField passwordAgainField;
     private JPanel RegisterPanel;
     private JFormattedTextField emailField;
-
+    private JButton loginButton;
     public RegisterPage() {
-        this.setContentPane(new RegisterPage().RegisterPanel);
+        this.setContentPane(RegisterPanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
-
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,6 +74,13 @@ public class RegisterPage extends JFrame{
                 catch(Exception ex) {
                     ex.printStackTrace();
                 }
+            }
+        });
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LoginPage LoginPageForm = new LoginPage();
+                dispose();
             }
         });
     }
