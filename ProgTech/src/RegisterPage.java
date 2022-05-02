@@ -44,12 +44,12 @@ public class RegisterPage extends JFrame{
                                 }
                                 else if(!emailField.getText().isEmpty()){
                                     JOptionPane.showMessageDialog(null, "Ezzel az E-mail-lel már regisztráltak", "HIBA", JOptionPane.ERROR_MESSAGE);
-                                    isAbleToRegister = false;
+                                    break;
                                 }
                             }
                             else if(!usernameField.getText().isEmpty()){
                                 JOptionPane.showMessageDialog(null, "Ez a felhasználónév már létezik", "HIBA", JOptionPane.ERROR_MESSAGE);
-                                isAbleToRegister = false;
+                                break;
                             }
                         }
                     }
