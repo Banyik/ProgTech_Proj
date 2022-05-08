@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UpdateToy extends JFrame{
@@ -27,16 +28,19 @@ public class UpdateToy extends JFrame{
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setVisible(true);
 
-        btnUpdate.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
-                orderToyFrame.dispose();
+                try {
+                    listToysFrame.setEnabled(true);
+                    listToysFrame.updateToyTable();
+                    dispose();
+                    orderToyFrame.dispose();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (invalidToyIdException | invalidToyNameException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
             }
         });
         priceTField.addKeyListener(new KeyAdapter() {

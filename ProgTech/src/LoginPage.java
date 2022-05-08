@@ -11,7 +11,7 @@ public class LoginPage extends JFrame{
     private JPanel LoginPanel;
     private JButton registerButton;
 
-    public boolean tryLogin(ResultSet result, String username, String password) throws SQLException {
+    public boolean tryLogin(ResultSet result, String username, String password) throws SQLException, invalidToyIdException, invalidToyNameException {
         if(username.equals(result.getString("username")) && password.equals(result.getString("password"))){
             Users user = new Users(result.getInt("id"), result.getString("username"), result.getString("auth"), result.getString("email"), result.getString("address"));
             UserLoggedInObserver userObvserver = new UserLoggedInObserver(user);

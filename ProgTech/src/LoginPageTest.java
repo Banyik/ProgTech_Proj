@@ -5,7 +5,7 @@ import java.sql.*;
 
 class LoginPageTest {
     @Test
-    void successfulLogin() throws SQLException {
+    void successfulLogin() throws SQLException, invalidToyIdException, invalidToyNameException {
 
         String DB = "jdbc:mysql://localhost:3306/jatekaruhaz";
         String USERNAME = "root";
@@ -27,7 +27,7 @@ class LoginPageTest {
     }
 
     @Test
-    void unsuccessfullLogin()throws SQLException {
+    void unsuccessfullLogin() throws SQLException, invalidToyIdException, invalidToyNameException {
 
         String DB = "jdbc:mysql://localhost:3306/jatekaruhaz";
         String USERNAME = "root";
