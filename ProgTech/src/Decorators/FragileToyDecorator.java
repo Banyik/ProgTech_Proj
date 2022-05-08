@@ -9,12 +9,6 @@ import javax.swing.*;
 
 public class FragileToyDecorator  extends Toy {
     private Toy decoratableToy;
-    public Toy getDecoratableToy() {
-        return decoratableToy;
-    }
-    public void setDecoratableToy(Toy decoratableToy) {
-        this.decoratableToy = decoratableToy;
-    }
 
     public FragileToyDecorator(Toy toy) throws invalidToyIdException, invalidToyNameException {
         try{

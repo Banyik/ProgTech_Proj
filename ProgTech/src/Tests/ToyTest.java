@@ -84,4 +84,32 @@ class ToyTest {
         String actual = testToy.toString();
         assertEquals(expected, actual);
     }
+
+    @org.junit.jupiter.api.Test
+    void equalsShoudlReturnFalseForNull() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException {
+        Toy testToy1 = null;
+        Toy testToy2 = new Toy(1, "Test Toy", 2);
+        assertFalse(testToy2.equals(testToy1));
+    }
+
+    @org.junit.jupiter.api.Test
+    void equalsShoudlReturnFalseForOtherClasses() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException {
+        String testToy1 = "False Toy";
+        Toy testToy2 = new Toy(1, "Test Toy", 2);
+        assertFalse(testToy2.equals(testToy1));
+    }
+
+    @org.junit.jupiter.api.Test
+    void equalsShoudlReturnFalseForOtherToy() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException {
+        Toy testToy1 = new Toy(1, "Test Toy", 2);
+        Toy testToy2 = new Toy(2, "Test Toy", 2);
+        assertFalse(testToy2.equals(testToy1));
+    }
+
+    @org.junit.jupiter.api.Test
+    void equalsShoudlReturnFalseForSameToy() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException {
+        Toy testToy1 = new Toy(1, "Test Toy", 2);
+        Toy testToy2 = new Toy(1, "Test Toy", 2);
+        assertTrue(testToy2.equals(testToy1));
+    }
 }
