@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class PriorityToyDecorator extends Toy{
     private Toy decoratableToy;
     public Toy getDecoratableToy() {
@@ -7,10 +9,14 @@ public class PriorityToyDecorator extends Toy{
         this.decoratableToy = decoratableToy;
     }
 
-    public PriorityToyDecorator(Toy toy) {
-        this.decoratableToy = toy;
-        this.setPrice(decoratableToy.getPrice() + 450);
-        this.setId(toy.getId());
-        this.setName(toy.getName());
+    public PriorityToyDecorator(Toy toy) throws invalidToyIdException, invalidToyNameException {
+        try{
+            this.decoratableToy = toy;
+            this.setPrice(decoratableToy.getPrice() + 450);
+            this.setId(toy.getId());
+            this.setName(toy.getName());
+        } catch(invalidToyNameException  | invalidToyIdException ex)  {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
 }

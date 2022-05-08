@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class FragileToyDecorator  extends Toy{
     private Toy decoratableToy;
     public Toy getDecoratableToy() {
@@ -7,10 +9,15 @@ public class FragileToyDecorator  extends Toy{
         this.decoratableToy = decoratableToy;
     }
 
-    public FragileToyDecorator(Toy toy) {
-        this.decoratableToy = toy;
-        this.setPrice(decoratableToy.getPrice() + 300);
-        this.setId(toy.getId());
-        this.setName(toy.getName());
+    public FragileToyDecorator(Toy toy) throws invalidToyIdException, invalidToyNameException {
+        try{
+            this.decoratableToy = toy;
+            this.setPrice(decoratableToy.getPrice() + 300);
+            this.setId(toy.getId());
+            this.setName(toy.getName());
+        } catch(invalidToyNameException  | invalidToyIdException ex)  {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
     }
 }

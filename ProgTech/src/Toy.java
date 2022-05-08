@@ -7,7 +7,9 @@ public class Toy {
     public int getId() {
         return this.id;
     }
-    public void setId(int id) {
+    public void setId(int id) throws invalidToyIdException {
+        if(id <= 0)
+            throw new invalidToyIdException("Érvénytelen Játék Id");
         this.id = id;
     }
 
@@ -15,7 +17,9 @@ public class Toy {
     public String getName() {
         return this.name;
     }
-    public void setName(String name) {
+    public void setName(String name) throws invalidToyNameException {
+        if(name.equals(""))
+            throw new invalidToyNameException("A játék neve nem lehet üres!");
         this.name = name;
     }
 
@@ -30,10 +34,10 @@ public class Toy {
     public Toy() {
 
     }
-    public Toy(int id, String name, int price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
+    public Toy(int id, String name, int price) throws invalidToyIdException, invalidToyNameException {
+        setId(id);
+        setName(name);
+        setPrice(price);
     }
 
     @Override

@@ -41,7 +41,8 @@ public class AddNewToy extends JFrame {
         addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(validateTextFields()) {
+                try{
+                    validateTextFields();
                     String ToyName = nameTField.getText();
                     String ToyPrice = priceTField.getText();
 
@@ -64,25 +65,28 @@ public class AddNewToy extends JFrame {
                     catch(Exception ex) {
                         ex.printStackTrace();
                     }
-
+                } catch (priceValueIsIllegalException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch (priceFieldIsEmptyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch (nameFieldIsEmptyException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch(Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Valami hiba történt");
                 }
             }
         });
     }
-    private boolean validateTextFields() {
+    private void validateTextFields() throws nameFieldIsEmptyException, priceFieldIsEmptyException, priceValueIsIllegalException {
         if (nameTField.getText().length() == 0) {
-            JOptionPane.showMessageDialog(null, "Adjon meg egy Megnevezést a temréknek!");
-            return false;
+            throw new nameFieldIsEmptyException("A termék nevét üresen hagyta!");
         }
 
         if (priceTField.getText().length() == 0) {
-            JOptionPane.showMessageDialog(null, "Adjon meg egy Egységárat a terméknek!");
-            return false;
+            throw new priceFieldIsEmptyException("Az árnak nem adott értéket!");
         }
         if (Integer.parseInt(priceTField.getText()) <= 0) {
-            JOptionPane.showMessageDialog(null, "Érvényes árat adjon meg a terméknek!");
-            return false;
+            throw new priceValueIsIllegalException("Az ár értéke nem lehet negatív!");
         }
-        return true;
     }
 }

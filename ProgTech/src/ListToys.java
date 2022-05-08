@@ -25,7 +25,7 @@ public class ListToys extends JFrame {
     private JPanel mainPanel = new JPanel(new BorderLayout());
     private final ListToys ListToysForm = this;
     private final List<Toy> Toys = getToys();
-    public ListToys(Users user, LoginPage LoginPageForm) throws SQLException {
+    public ListToys(Users user, LoginPage LoginPageForm) throws SQLException, invalidToyIdException, invalidToyNameException {
         this.userLoggedIn = user;
         this.LoginPageForm = LoginPageForm;
         setTitle("Játékok áruháza");
@@ -71,7 +71,7 @@ public class ListToys extends JFrame {
         });
     }
 
-    private List<Toy> getToys() throws SQLException {
+    private List<Toy> getToys() throws SQLException, invalidToyIdException, invalidToyNameException {
         String DB_URL = "jdbc:mysql://localhost:3306/jatekaruhaz";
         String DB_USERNAME = "root";
         String PASSWORD = "";
@@ -83,7 +83,6 @@ public class ListToys extends JFrame {
         while (result.next()) {
             Toy toy = new Toy(Integer.parseInt(result.getString("id")), result.getString("name"), Integer.parseInt(result.getString("price")));
             toys.add(toy);
-            System.out.println(toy.toString());
         }
         stmt.close();
         connection.close();
@@ -102,9 +101,8 @@ public class ListToys extends JFrame {
         table.getTableHeader().setReorderingAllowed(false);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         mainPanel.add(new JScrollPane(table), BorderLayout.CENTER);
-
     }
-    public void updateToyTable() throws SQLException {
+    public void updateToyTable() throws SQLException, invalidToyIdException, invalidToyNameException {
         String DB_URL = "jdbc:mysql://localhost:3306/jatekaruhaz";
         String DB_USERNAME = "root";
         String PASSWORD = "";
@@ -112,15 +110,14 @@ public class ListToys extends JFrame {
         Statement stmt = connection.createStatement();
         String sql = "SELECT * FROM toy";
         ResultSet result = stmt.executeQuery(sql);
-        List<Toy> toys = new ArrayList<>();
+        Toys.removeAll(Toys);
         DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
         while (result.next()) {
             Toy toy = new Toy(Integer.parseInt(result.getString("id")), result.getString("name"), Integer.parseInt(result.getString("price")));
-            if(!this.Toys.contains(toy))
-            {
-                Toys.add(toy);
-                model.addRow(new Object[]{String.valueOf(toy.getId()), String.valueOf(toy.getName()), String.valueOf(toy.getPrice())});
-            }
+            Toys.add(toy);
+            model.addRow(new Object[]{String.valueOf(toy.getId()), String.valueOf(toy.getName()), String.valueOf(toy.getPrice())});
+
         }
         stmt.close();
         connection.close();
