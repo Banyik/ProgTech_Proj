@@ -28,7 +28,7 @@ public class UpdateToy extends JFrame{
         nameTField.setText(toy.getName());
         priceTField.setText(Integer.toString(toy.getPrice()));
         setContentPane(updateToyPanel);
-        setTitle("Új játék felvitele");
+        setTitle("Játék módosítása");
         setSize(450, 300);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setVisible(true);

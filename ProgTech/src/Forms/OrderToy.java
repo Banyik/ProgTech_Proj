@@ -8,6 +8,7 @@ import Decorators.PriorityToyDecorator;
 import Exceptions.invalidToyIdException;
 import Exceptions.invalidToyNameException;
 import Exceptions.invalidToyPriceException;
+import Exceptions.mailingAddressEmptyException;
 import Observers.ToyOrderedObserver;
 
 import javax.swing.*;
@@ -77,13 +78,13 @@ public class OrderToy extends JFrame {
                     String PASSWORD = "";
                     String address = tfSzallitasiCim.getText();
                     try {
-                        if (validateOrder()) {
-                            InsertIntoOrder(DB_URL, DB_USERNAME, PASSWORD, decorated, user.getUsername(), address);
-                            JOptionPane.showMessageDialog(null, "Sikeres rendelés!\nFizetendő összeg: " + decorated.getPrice() + " Ft.");
-
-                            prevFrame.setEnabled(true);
-                            dispose();
-                        }
+                        validateOrder();
+                        InsertIntoOrder(DB_URL, DB_USERNAME, PASSWORD, decorated, user.getUsername(), address);
+                        JOptionPane.showMessageDialog(null, "Sikeres rendelés!\nFizetendő összeg: " + decorated.getPrice() + " Ft.");
+                        prevFrame.setEnabled(true);
+                        dispose();
+                    } catch (mailingAddressEmptyException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -159,12 +160,9 @@ public class OrderToy extends JFrame {
 
     }
 
-    public boolean validateOrder() {
+    public void validateOrder() throws mailingAddressEmptyException {
         if(tfSzallitasiCim.getText().length() <= 0)
-        {
-            JOptionPane.showMessageDialog(null, "Adjon meg egy kiszállítási címet!");
-            return false;
-        }
-        return true;
+            throw new mailingAddressEmptyException("A kiszállítási címet üresen hagyta!");
+
     }
 }
