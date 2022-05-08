@@ -25,7 +25,7 @@ public class UserAddedObserver extends Observer{
         FileWriter fW = null;
         try {
             fW = new FileWriter("log.txt", true);
-            fW.write("Registered: " + users.toString() + formatter.format(date));
+            fW.write("Registered: " + users.toString() + formatter.format(date)+"\n");
             fW.close();
         } catch (IOException e) {
             throw new RuntimeException(e);

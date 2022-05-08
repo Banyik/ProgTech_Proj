@@ -4,14 +4,19 @@ import org.junit.jupiter.api.Test;
 import java.sql.*;
 
 class LoginPageTest {
+    String DB = "jdbc:mysql://localhost:3306/jatekaruhaz";
+    String USERNAME = "root";
+    String PASSWORD = "";
+    Connection connection = DriverManager.getConnection(DB, USERNAME, PASSWORD);
+    Statement stmt = connection.createStatement();
+
+    LoginPageTest() throws SQLException {
+    }
+
     @Test
     void successfulLogin() throws SQLException, invalidToyIdException, invalidToyNameException {
 
-        String DB = "jdbc:mysql://localhost:3306/jatekaruhaz";
-        String USERNAME = "root";
-        String PASSWORD = "";
-        Connection connection = DriverManager.getConnection(DB, USERNAME, PASSWORD);
-        Statement stmt = connection.createStatement();
+
         String username = "admin";
         String password = "admin";
         ResultSet result = stmt.executeQuery("SELECT * FROM user WHERE username = '"+ username +"'; ");
@@ -28,12 +33,6 @@ class LoginPageTest {
 
     @Test
     void unsuccessfullLogin() throws SQLException, invalidToyIdException, invalidToyNameException {
-
-        String DB = "jdbc:mysql://localhost:3306/jatekaruhaz";
-        String USERNAME = "root";
-        String PASSWORD = "";
-        Connection connection = DriverManager.getConnection(DB, USERNAME, PASSWORD);
-        Statement stmt = connection.createStatement();
         String username = "notadmin";
         String password = "notadmin";
         ResultSet result = stmt.executeQuery("SELECT * FROM user WHERE username = '"+ username +"'; ");
