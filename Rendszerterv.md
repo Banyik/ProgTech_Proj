@@ -63,3 +63,33 @@ Backend:
   - Ablakokkal kapcsolatos műveletek (átnavigálás, bezárás, előtérbe helyezés)
   - Események kiváltásához alkalmas function-ök legenerálása
   
+##  8. Adatbázis terv
+![Adatbázis Terv](https://cdn.discordapp.com/attachments/817069854033051689/972929808004702288/unknown.png)
+
+## 9. Implementációs terv
+Az ablakos alkalmazást JAVA nyelven, illetve SWING grafikus felület segítségével készítettük el. Két tervezési mintát építettünk a rendszerbe:
+- Logoláshoz alkalmaztuk az Observer (figyelő) Design Pattern-t
+- Rendelési optió kiválasztásához a Decorator (díszítő) Design Pattern-t
+
+## 10. Tesztterv
+Folyamatos Unit Tesztek írása a fejlesztés egyes fázisaiban, így biztosítva a rendszer bővíthetőségét a későbbiek során.
+
+## 11. Telepítési terv
+Egy asztali számítógép szükséges az alkalmazás futtatásához.
+
+
+
+## 12. Karbantartási terv
+“Az alkalmazás folyamatos üzemeltetése és karbantartása, mely
+
+magában foglalja a programhibák elhárítását, a belső igények változása miatti
+
+módosításokat, valamint a környezeti feltételek változása miatt
+
+megfogalmazott program-, illetve állomány módosítási igényeket.
+
+Karbantartás:
+
+Corrective Maintenance: A megrendelő jelenti, ha bármi hibát vélt felfedezni.
+
+Adaptive Maintenance: A program naprakészen tartása és finomhangolása.
