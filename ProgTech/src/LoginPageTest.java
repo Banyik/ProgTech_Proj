@@ -40,7 +40,22 @@ class LoginPageTest {
         boolean testResult = false;
         while(result.next()){
             testResult = (loginPage.tryLogin(result, username, password));
-            if(testResult)
+            if(!testResult)
+                break;
+        }
+        Assertions.assertFalse(testResult);
+
+    }
+    @Test
+    void unsuccessfullLoginWithPassword() throws SQLException, invalidToyIdException, invalidToyNameException {
+        String username = "admin";
+        String password = "notadmin";
+        ResultSet result = stmt.executeQuery("SELECT * FROM user WHERE username = '"+ username +"'; ");
+        LoginPage loginPage = new LoginPage();
+        boolean testResult = true;
+        while(result.next()){
+            testResult = (loginPage.tryLogin(result, username, password));
+            if(!testResult)
                 break;
         }
         Assertions.assertFalse(testResult);
