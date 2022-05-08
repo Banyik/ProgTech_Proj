@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +22,14 @@ public class ToyAddedObserver extends Observer {
         }
         SimpleDateFormat formatter = new SimpleDateFormat(" yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
+        FileWriter fW = null;
+        try {
+            fW = new FileWriter("log.txt", true);
+            fW.write("Toy added: " + toy.toString() + formatter.format(date)+"\n");
+            fW.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Toy added: " + toy.toString() + formatter.format(date));
     }
 }
