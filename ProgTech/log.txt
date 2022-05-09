@@ -5,3 +5,9 @@ Logged in: User{id=1, username='admin', auth=admin} 2022/05/08 18:52:01
 Logged in: User{id=1, username='admin', auth=admin} 2022/05/08 18:56:16
 Logged in: User{id=1, username='admin', auth=admin} 2022/05/08 19:07:09
 Logged in: User{id=1, username='admin', auth=admin} 2022/05/08 19:08:04
+Logged in: User{id=1, username='admin', auth=admin} 2022/05/09 10:15:48
+Logged in: User{id=2, username='user', auth=user} 2022/05/09 10:16:22
+Toy ordered: BaseClasses.Toy{id=2, name='Piros autó', price=1122} 2022/05/09 10:16:43
+Registered: User{id=3, username='User2', auth=User} 2022/05/09 10:17:01
+Logged in: User{id=3, username='User2', auth=User} 2022/05/09 10:17:31
+Toy ordered: BaseClasses.Toy{id=4, name='Negyedik játék', price=123123423} 2022/05/09 10:17:43

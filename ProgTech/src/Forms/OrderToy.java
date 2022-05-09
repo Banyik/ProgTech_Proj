@@ -105,7 +105,7 @@ public class OrderToy extends JFrame {
                 stmt.execute(sql);
                 stmt.close();
                 connection.close();
-                ToyOrderedObserver toyOrderedObvserver = new ToyOrderedObserver (toy);
+                ToyOrderedObserver toyOrderedObvserver = new ToyOrderedObserver (decorated);
                 toyOrderedObvserver.update();
             }
 
