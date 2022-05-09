@@ -9,6 +9,7 @@ import Exceptions.invalidToyIdException;
 import Exceptions.invalidToyNameException;
 import Exceptions.invalidToyPriceException;
 import Exceptions.mailingAddressEmptyException;
+import Observers.ToyDeletedObserver;
 import Observers.ToyOrderedObserver;
 
 import javax.swing.*;
@@ -138,7 +139,8 @@ public class OrderToy extends JFrame {
                     stmt.execute(sql);
                     stmt.close();
                     connection.close();
-
+                    ToyDeletedObserver toyDeletedObserver = new ToyDeletedObserver(toy);
+                    toyDeletedObserver.update();
                     listToysFrame.updateToyTable();
                     prevFrame.setEnabled(true);
                     dispose();

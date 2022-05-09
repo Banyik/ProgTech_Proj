@@ -1,7 +1,6 @@
-package Tests;
-
 import BaseClasses.Toy;
-import Decorators.PriorityToyDecorator;
+import Decorators.CodToyDecorator;
+import Decorators.FragileToyDecorator;
 import Exceptions.invalidToyIdException;
 import Exceptions.invalidToyNameException;
 import Exceptions.invalidToyPriceException;
@@ -9,12 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PriorityToyDecoratorTest {
+class FragileToyDecoratorTest {
     @Test
-    void priorityShouldIncreasePriceBy450() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException {
+    void fragileShouldIncreasePriceBy300() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException {
         Toy testToy = new Toy(1, "Test Toy", 1);
-        Toy codToy = new PriorityToyDecorator(testToy);
-        Toy expectedDecorated = new Toy(1, "Test Toy", 1 + 450);
+        Toy codToy = new FragileToyDecorator(testToy);
+        Toy expectedDecorated = new Toy(1, "Test Toy", 1 + 300);
         assertEquals(expectedDecorated.getPrice(), codToy.getPrice());
     }
 }

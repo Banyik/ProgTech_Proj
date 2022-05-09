@@ -1,7 +1,5 @@
-package Tests;
-
 import BaseClasses.Toy;
-import Decorators.CodToyDecorator;
+import Decorators.PriorityToyDecorator;
 import Exceptions.invalidToyIdException;
 import Exceptions.invalidToyNameException;
 import Exceptions.invalidToyPriceException;
@@ -9,14 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CodToyDecoratorTest {
-
+class PriorityToyDecoratorTest {
     @Test
-    void codShouldIncreasePriceBy150() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException {
+    void priorityShouldIncreasePriceBy450() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException {
         Toy testToy = new Toy(1, "Test Toy", 1);
-        Toy codToy = new CodToyDecorator(testToy);
-        Toy expectedDecorated = new Toy(1, "Test Toy", 1 + 150);
+        Toy codToy = new PriorityToyDecorator(testToy);
+        Toy expectedDecorated = new Toy(1, "Test Toy", 1 + 450);
         assertEquals(expectedDecorated.getPrice(), codToy.getPrice());
     }
-
 }

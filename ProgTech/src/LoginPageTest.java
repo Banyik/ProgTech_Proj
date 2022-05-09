@@ -1,5 +1,3 @@
-package Tests;
-
 import Exceptions.invalidToyIdException;
 import Exceptions.invalidToyNameException;
 import Exceptions.invalidToyPriceException;

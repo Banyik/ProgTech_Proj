@@ -2,6 +2,7 @@ package Forms;
 
 import BaseClasses.Toy;
 import Exceptions.*;
+import Observers.ToyUpdatedObserver;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -78,6 +79,9 @@ public class UpdateToy extends JFrame{
                         stmt.close();
                         connection.close();
                         JOptionPane.showMessageDialog(null, "Sikeres módosítás!");
+
+                        ToyUpdatedObserver toyUpdatedObserver = new ToyUpdatedObserver(new Toy(toy.getId(),nameTField.getText(), Integer.parseInt(priceTField.getText())));
+                        toyUpdatedObserver.update();
                         listToysFrame.setEnabled(true);
                         listToysFrame.updateToyTable();
                         dispose();

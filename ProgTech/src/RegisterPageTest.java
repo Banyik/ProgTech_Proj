@@ -1,5 +1,3 @@
-package Tests;
-
 import Forms.RegisterPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

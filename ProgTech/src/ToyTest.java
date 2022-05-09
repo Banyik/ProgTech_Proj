@@ -1,5 +1,3 @@
-package Tests;
-
 import BaseClasses.Toy;
 import Exceptions.invalidToyIdException;
 import Exceptions.invalidToyNameException;
@@ -80,7 +78,7 @@ class ToyTest {
     @org.junit.jupiter.api.Test
     void toStringTest() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException {
         Toy testToy = new Toy(1, "Test ToString BaseClasses.Toy", 100);
-        String expected = "BaseClasses.Toy{id=1, name='Test ToString BaseClasses.Toy\', price=100}";
+        String expected = "Toy{id=1, name='Test ToString BaseClasses.Toy\', price=100}";
         String actual = testToy.toString();
         assertEquals(expected, actual);
     }

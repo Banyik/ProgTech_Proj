@@ -50,7 +50,7 @@ public class Toy {
 
     @Override
     public String toString() {
-        return "BaseClasses.Toy{" +
+        return "Toy{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
