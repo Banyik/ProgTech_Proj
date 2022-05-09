@@ -59,10 +59,10 @@ public class RegisterPage extends JFrame{
                         while(result.next()){
                             if(!usernameField.getText().isEmpty() && checkUsername(result, usernameField.getText())){
                                 if(!emailField.getText().isEmpty() && checkEmail(result, emailField.getText())){
-                                    stmt.execute("INSERT INTO user(email, username, password, auth, address) VALUES ('"+emailField.getText()+"', '"+usernameField.getText()+"', '"+password+"', 'User', 'N/A')");
+                                    stmt.execute("INSERT INTO user(email, username, password, auth) VALUES ('"+emailField.getText()+"', '"+usernameField.getText()+"', '"+password+"', 'User')");
                                     ResultSet resultThis = stmt.executeQuery("SELECT * FROM user WHERE username = '"+ usernameField.getText() +"' ;");
                                     while (resultThis.next()){
-                                        Users user = new Users(resultThis.getInt("id"), resultThis.getString("username"), resultThis.getString("auth"), resultThis.getString("email"), "N/A");
+                                        Users user = new Users(resultThis.getInt("id"), resultThis.getString("username"), resultThis.getString("auth"), resultThis.getString("email"));
                                         UserAddedObserver userObvserver = new UserAddedObserver(user);
                                         userObvserver.update();
                                         LoginPage LoginPageForm = new LoginPage();

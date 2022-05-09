@@ -6,12 +6,11 @@ public class Users {
     String auth;
     String email;
     String address;
-    public Users(int id, String username, String auth, String email, String address) {
+    public Users(int id, String username, String auth, String email) {
         this.id = id;
         this.username = username;
         this.auth = auth;
         this.email = email;
-        this.address = address;
     }
 
 

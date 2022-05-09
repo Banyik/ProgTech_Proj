@@ -21,7 +21,7 @@ public class LoginPage extends JFrame{
 
     public boolean tryLogin(ResultSet result, String username, String password) throws SQLException, invalidToyIdException, invalidToyNameException, invalidToyPriceException {
         if(username.equals(result.getString("username")) && password.equals(result.getString("password"))){
-            Users user = new Users(result.getInt("id"), result.getString("username"), result.getString("auth"), result.getString("email"), result.getString("address"));
+            Users user = new Users(result.getInt("id"), result.getString("username"), result.getString("auth"), result.getString("email"));
             UserLoggedInObserver userObvserver = new UserLoggedInObserver(user);
             userObvserver.update();
             LoginPageForm.setEnabled(false);

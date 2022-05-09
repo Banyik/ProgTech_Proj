@@ -16,3 +16,11 @@ Toy deleted: BaseClasses.Toy{id=4, name='Távirányítós autó', price=456} 202
 Toy updated: BaseClasses.Toy{id=3, name='UnikornisAAAAAAAAAAAAAAAA', price=456} 2022/05/09 10:29:01
 Logged in: User{id=1, username='admin', auth=admin} 2022/05/09 10:31:08
 Logged in: User{id=1, username='admin', auth=admin} 2022/05/09 10:33:23
+Logged in: User{id=1, username='admin', auth=admin} 2022/05/09 10:37:31
+Toy deleted: Toy{id=3, name='UnikornisAAAAAAAAAAAAAAAA', price=456} 2022/05/09 10:37:36
+Toy updated: Toy{id=2, name='Piros autó', price=3990} 2022/05/09 10:37:51
+Toy updated: Toy{id=1, name='Micimackó', price=4290} 2022/05/09 10:38:01
+Logged in: User{id=2, username='user', auth=user} 2022/05/09 10:38:10
+Toy ordered: Toy{id=2, name='Piros autó', price=4740} 2022/05/09 10:38:20
+Registered: User{id=36, username='user2', auth=User} 2022/05/09 10:43:38
+Logged in: User{id=1, username='admin', auth=admin} 2022/05/09 10:50:59
