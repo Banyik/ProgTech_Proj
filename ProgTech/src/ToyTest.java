@@ -3,6 +3,8 @@ import Exceptions.invalidToyIdException;
 import Exceptions.invalidToyNameException;
 import Exceptions.invalidToyPriceException;
 
+import java.sql.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ToyTest {
@@ -109,5 +111,37 @@ class ToyTest {
         Toy testToy1 = new Toy(1, "Test Toy", 2);
         Toy testToy2 = new Toy(1, "Test Toy", 2);
         assertTrue(testToy2.equals(testToy1));
+    }
+
+    @org.junit.jupiter.api.Test
+    void TestToyInsert() throws invalidToyIdException, invalidToyNameException, invalidToyPriceException, SQLException {
+        String toyName = "Test Toy";
+        int toyPrice = 9999;
+        String DB_URL = "jdbc:mysql://localhost:3306/jatekaruhaz";
+        String USERNAME = "root";
+        String PASSWORD = "";
+        Connection connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+        Statement stmt = connection.createStatement();
+        String sql = "INSERT INTO toy(name, price) VALUES('"+toyName+"', "+toyPrice+")";
+        stmt.execute(sql);
+        sql = "SELECT * FROM toy ORDER BY id DESC LIMIT 1";
+        ResultSet result = stmt.executeQuery(sql);
+        Toy actual = null;
+        Toy expected = null;
+        int InsertedToyId = 0;
+        while(result.next()) {
+            InsertedToyId = Integer.parseInt(result.getString("id"));
+            String InsertedToyName = result.getString("name");
+            int InsertedToyPrice = Integer.parseInt(result.getString("price"));
+            actual = new Toy(InsertedToyId, InsertedToyName, InsertedToyPrice);
+            expected = new Toy(InsertedToyId, toyName, toyPrice);
+        }
+        sql = "DELETE FROM toy WHERE id="+InsertedToyId;
+        stmt.execute(sql);
+        sql = "ALTER TABLE `toy` AUTO_INCREMENT = 1";
+        stmt.execute(sql);
+        connection.close();
+        stmt.close();
+        assertEquals(expected, actual);
     }
 }
